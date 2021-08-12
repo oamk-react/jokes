@@ -1,5 +1,4 @@
 import './App.css';
-import axios from 'axios';
 import {useState} from 'react';
  
 const URL = 'https://official-joke-api.appspot.com/random_joke';
@@ -10,13 +9,16 @@ function App() {
 
   async function getJoke(e) {
     e.preventDefault();
-    axios.get(URL)
-      .then((response) => {
-        setSetup(response.data.setup);
-        setPunchline(response.data.punchline);
-      }).catch (error => {
-        alert(error);
-      });
+    fetch(URL)
+      .then(response => response.json())
+      .then (
+        (response) => {
+          setSetup(response.setup);
+          setPunchline(response.punchline)
+        }, (error) => {
+          alert(error);
+        }
+      )
   }
 
   return (
